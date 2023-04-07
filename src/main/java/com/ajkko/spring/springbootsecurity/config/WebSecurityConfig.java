@@ -41,27 +41,25 @@ public class WebSecurityConfig  {
 
         InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
         UserDetails admin = User
                 .withUsername("administrator")
-                .password(passwordEncoder.encode("pass"))
+                .password(passwordEncoder().encode("pass"))
                 .roles("admin")
                 .build();
 
-        UserDetails sergiiUser = User
-                .withUsername("Sergii")
-                .password(passwordEncoder.encode("pass"))
+        UserDetails user = User
+                .withUsername("user")
+                .password(passwordEncoder().encode("pass"))
                 .roles("user")
                 .build();
 
         userDetailsManager.createUser(admin);
-        userDetailsManager.createUser(sergiiUser);
+        userDetailsManager.createUser(user);
         return userDetailsManager;
     }
 
     @Bean
-    public PasswordEncoder encoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
